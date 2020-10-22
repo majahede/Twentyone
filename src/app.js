@@ -11,6 +11,34 @@
 
 import { Deck } from './Deck.js'
 
+// Create a deck of 52 playing cards
+const playingCards = Deck.create()
+console.log(playingCards.join(', '), '\n')
+
+// shuffle the deck
+Deck.shuffle(playingCards)
+console.log(playingCards.join(', '), '\n')
+
+// player draws one card
+let player1 = playingCards.splice(0, 2)
+console.log(player1)
+
+// Total value of players hand
+/**
+ * Returns the total value of the players hand.
+ *
+ * @param {hand[]} hand - The array of cards to count.
+ * @returns {number} The total value of the players hand.
+ */
+function totalValue (hand) {
+  return hand.reduce((a, b) => a + b, 0)
+}
+
+console.log(totalValue(player1))
+
+// console.log(playingCards.join())
+
+/*
 try {
   // Create 52 playing cards and...
   const playingCards = Deck.create()
@@ -32,4 +60,4 @@ try {
   console.log(`${hand.join(' ')} (${value})`)
 } catch (e) {
   console.error(e.message)
-}
+} */
