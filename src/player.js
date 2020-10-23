@@ -1,5 +1,6 @@
 import { Deck } from './Deck.js'
 
+/*
 // Create a deck of 52 playing cards
 const playingCards = Deck.create()
 console.log(playingCards.join(', '), '\n')
@@ -18,8 +19,13 @@ export class Player {
     return playingCards.splice(0, 1)
   }
 
-  // returns the players stopvalue
   get stopValue () {
-    return Math.floor(Math.random() * (18 - 9 + 1) + 9)
+    return this._stopValue
+  }
+  // returns the players stopvalue
+
+  set stopValue (max) {
+    this._stopvalue = Math.floor(Math.random() * (max - 9 + 1) + 9)
   }
 }
+*/
