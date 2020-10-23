@@ -10,6 +10,7 @@
 // TODO: Replace the code below with your own game logic.
 
 import { Deck } from './Deck.js'
+import { Player } from './player.js'
 
 // Create a deck of 52 playing cards
 const playingCards = Deck.create()
@@ -19,22 +20,32 @@ console.log(playingCards.join(', '), '\n')
 Deck.shuffle(playingCards)
 console.log(playingCards.join(', '), '\n')
 
-// player draws one card
-let player1 = playingCards.splice(0, 2)
-console.log(player1)
+let player1 = new Player (1)
 
-// Total value of players hand
+// player draws one card
+/* let player1 = playingCards.splice(0, 1)
+console.log('PLayer 1 = ' + player1.join(', '), '\n')
+
+const numberOfPlayers = 3
+
+const players = []
+for (let i = 0; i < numberOfPlayers; i++) {
+  players[i] = {
+    player: i + 1
+  }
+}
+
 /**
  * Returns the total value of the players hand.
  *
  * @param {hand[]} hand - The array of cards to count.
  * @returns {number} The total value of the players hand.
  */
-function totalValue (hand) {
-  return hand.reduce((a, b) => a + b, 0)
-}
+//function totalValue (hand) {
+  //return hand.reduce((a, b) => a + b, 0)
+//}
 
-console.log(totalValue(player1))
+//console.log(totalValue(player1))
 
 // console.log(playingCards.join())
 
