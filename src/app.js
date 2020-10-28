@@ -9,42 +9,60 @@
 
 import { Deck } from './Deck.js'
 import { Player } from './player.js'
+import { createPlayer } from './createPlayer.js'
+//import { dealCards } from './dealCards.js'
+import { Dealer } from './dealer.js'
 import { dealCards } from './dealCards.js'
 
 // Create a deck of 52 playing cards
 const playingCards = Deck.create()
-// console.log(playingCards.join(', '), '\n')
 
 // shuffle the deck
 Deck.shuffle(playingCards)
-// console.log(playingCards.join(', '), '\n')
 
-// Create array of players
+// Set number of players
 const numOfPlayers = 7
 
-const player = new Player(1)
+// Creates a new array of players
+const players = createPlayer(numOfPlayers)
 
-console.log(player)
-console.log(player.stopValue())
+// Create new dealer
+const dealer = new Dealer(15)
 
-/* const players = []
-for (let i = 1; i <= numOfPlayers; i++) {
-  new Player(i)
-  players.push()
-} */
+// Deal first card to all players
+for (let i = 0; i < players.length; i++) {
+  players[i].hand = playingCards.splice(0, 1)
+}
 
-// Deal one card to all players (not dealer)
-/* players.forEach(element => playingCards.splice(0,1))
-console.log(players) */
+console.log(playingCards.join(', '), '\n')
 
-// Deal cards to the player until they reach their stop value.
+//Deal card to player until stop value
+for (let i = 0; i < 4; i++) {
+  players[5].hand.push(playingCards[0])
+  playingCards.shift()
+  players[5].value = players[5].hand.reduce((value, playingCard) => value + playingCard, 0)
+  if (players[5].value === 21 || players[5].value > players[5].stopValue()) {
+    break
+  }
+}
 
-dealCards(player, playingCards)
+// Print 
+console.log(`Player : ${players[5].hand.join(' ')} (${players[5].value})`)
 
-//
-// Dealer draws card
+// Dealers turn
+dealer.hand = playingCards.splice(0, 1)
+for (let i = 0; i < 4; i++) {
+  dealer.hand.push(playingCards[0])
+  playingCards.shift()
+  dealer.value = dealer.hand.reduce((value, playingCard) => value + playingCard, 0)
+  if (players[5].value === 21 || dealer.value > dealer.stopValue) {
+    break
+  }
+}
+// print
+console.log(`Dealer : ${dealer.hand.join(' ')} (${dealer.value})`)
 
-//Repeat for every player
+// Print winner
 
 /*
 try {
@@ -69,5 +87,4 @@ try {
 } catch (e) {
   console.error(e.message)
 }
-
-*/
+ */ 
