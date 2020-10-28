@@ -8,7 +8,8 @@
  */
 
 import { Deck } from './Deck.js'
-// import { Player } from './player.js'
+import { Player } from './player.js'
+import { dealCards } from './dealCards.js'
 
 // Create a deck of 52 playing cards
 const playingCards = Deck.create()
@@ -18,24 +19,32 @@ const playingCards = Deck.create()
 Deck.shuffle(playingCards)
 // console.log(playingCards.join(', '), '\n')
 
-// Deal card to the player until they reach their stop value.
-function dealCards () {
-  let hand = []
-  let value = 0
-  for (let i = 1; i <= 5; i++) {
-    hand = playingCards.splice(0, i)
-    value = hand.reduce((value, playingCard) => value + playingCard, 0)
-    if (value > 18) {
-      break
-    } else {
-      hand.forEach(element => playingCards.unshift(element))
-      continue
-    }
-  }
-  console.log(`Player : ${hand.join(' ')} (${value})`)
-}
+// Create array of players
+const numOfPlayers = 7
 
-dealCards()
+const player = new Player(1)
+
+console.log(player)
+console.log(player.stopValue())
+
+/* const players = []
+for (let i = 1; i <= numOfPlayers; i++) {
+  new Player(i)
+  players.push()
+} */
+
+// Deal one card to all players (not dealer)
+/* players.forEach(element => playingCards.splice(0,1))
+console.log(players) */
+
+// Deal cards to the player until they reach their stop value.
+
+dealCards(player, playingCards)
+
+//
+// Dealer draws card
+
+//Repeat for every player
 
 /*
 try {
