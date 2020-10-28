@@ -12,7 +12,6 @@ import { Player } from './player.js'
 import { createPlayer } from './createPlayer.js'
 //import { dealCards } from './dealCards.js'
 import { Dealer } from './dealer.js'
-import { dealCards } from './dealCards.js'
 
 // Create a deck of 52 playing cards
 const playingCards = Deck.create()
@@ -36,18 +35,22 @@ for (let i = 0; i < players.length; i++) {
 
 console.log(playingCards.join(', '), '\n')
 
-//Deal card to player until stop value
-for (let i = 0; i < 4; i++) {
-  players[5].hand.push(playingCards[0])
-  playingCards.shift()
-  players[5].value = players[5].hand.reduce((value, playingCard) => value + playingCard, 0)
-  if (players[5].value === 21 || players[5].value > players[5].stopValue()) {
-    break
+// Deal card to player until stop value
+function dealCards (player) {
+  for (let i = 0; i < 4; i++) {
+    player.hand.push(playingCards[0])
+    playingCards.shift()
+    player.value = player.hand.reduce((value, playingCard) => value + playingCard, 0)
+    if (player.value === 21 || player.value > player.stopValue()) {
+      break
+    }
   }
 }
-
-// Print 
+// Print
+dealCards(players[5])
 console.log(`Player : ${players[5].hand.join(' ')} (${players[5].value})`)
+
+// print if winner
 
 // Dealers turn
 dealer.hand = playingCards.splice(0, 1)
@@ -63,6 +66,15 @@ for (let i = 0; i < 4; i++) {
 console.log(`Dealer : ${dealer.hand.join(' ')} (${dealer.value})`)
 
 // Print winner
+if (players[5].value === 21 || (players[5].hand.length === 5 && players[5].value < 21)) {
+  console.log('Player wins!')
+} else if (dealer.value === 21 || (dealer.hand.length === 5 && dealer.value < 21)) {
+  console.log('Dealer wins!')
+} else if (dealer.value < 21 && dealer.value >= players[5].value) {
+  console.log('Dealer wins!')
+} else {
+  console.log('Player wins!')
+}
 
 /*
 try {
