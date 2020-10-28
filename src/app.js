@@ -10,8 +10,9 @@
 import { Deck } from './Deck.js'
 import { Player } from './player.js'
 import { createPlayer } from './createPlayer.js'
-//import { dealCards } from './dealCards.js'
+import { dealCards } from './dealCards.js'
 import { Dealer } from './dealer.js'
+import { dealerCards } from './dealerCards.js'
 
 // Create a deck of 52 playing cards
 const playingCards = Deck.create()
@@ -33,47 +34,29 @@ for (let i = 0; i < players.length; i++) {
   players[i].hand = playingCards.splice(0, 1)
 }
 
-console.log(playingCards.join(', '), '\n')
-
-// Deal card to player until stop value
-function dealCards (player) {
-  for (let i = 0; i < 4; i++) {
-    player.hand.push(playingCards[0])
-    playingCards.shift()
-    player.value = player.hand.reduce((value, playingCard) => value + playingCard, 0)
-    if (player.value === 21 || player.value > player.stopValue()) {
-      break
+// game
+for (let i = 0; i < players.length; i++) {
+  // Deal card to player until stop value
+  dealCards(players[i], playingCards)
+  // Print if winner, game is over
+  if (players[i].value === 21 || (players[i].hand.length === 5 && players[i].value < 21)) {
+    console.log(`Player : ${players[i].hand.join(' ')} (${players[i].value})`)
+    console.log('Dealer : -')
+    console.log('Player wins!')
+  } else {
+  // Dealers turn
+    dealerCards(dealer, playingCards)
+    // print result
+    console.log(`Player : ${players[i].hand.join(' ')} (${players[i].value})`)
+    console.log(`Dealer : ${dealer.hand.join(' ')} (${dealer.value})`)
+    if (dealer.value === 21 || (dealer.hand.length === 5 && dealer.value < 21)) {
+      console.log('Dealer wins!')
+    } else if (dealer.value < 21 && dealer.value >= players[i].value) {
+      console.log('Dealer wins!')
+    } else {
+      console.log('Player wins!')
     }
   }
-}
-// Print
-dealCards(players[5])
-console.log(`Player : ${players[5].hand.join(' ')} (${players[5].value})`)
-
-// print if winner
-
-// Dealers turn
-dealer.hand = playingCards.splice(0, 1)
-for (let i = 0; i < 4; i++) {
-  dealer.hand.push(playingCards[0])
-  playingCards.shift()
-  dealer.value = dealer.hand.reduce((value, playingCard) => value + playingCard, 0)
-  if (players[5].value === 21 || dealer.value > dealer.stopValue) {
-    break
-  }
-}
-// print
-console.log(`Dealer : ${dealer.hand.join(' ')} (${dealer.value})`)
-
-// Print winner
-if (players[5].value === 21 || (players[5].hand.length === 5 && players[5].value < 21)) {
-  console.log('Player wins!')
-} else if (dealer.value === 21 || (dealer.hand.length === 5 && dealer.value < 21)) {
-  console.log('Dealer wins!')
-} else if (dealer.value < 21 && dealer.value >= players[5].value) {
-  console.log('Dealer wins!')
-} else {
-  console.log('Player wins!')
 }
 
 /*
@@ -99,4 +82,4 @@ try {
 } catch (e) {
   console.error(e.message)
 }
- */ 
+ */
