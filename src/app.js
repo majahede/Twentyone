@@ -13,13 +13,14 @@ import { createPlayer } from './createPlayer.js'
 import { dealCards } from './dealCards.js'
 import { Dealer } from './dealer.js'
 import { dealerCards } from './dealerCards.js'
+import { reshuffle } from './reshuffle.js'
 
 // Create a deck of 52 playing cards
-const playingCards = Deck.create()
+let playingCards = Deck.create()
 
 // shuffle the deck
 Deck.shuffle(playingCards)
-
+console.log(playingCards.join(', '), '\n')
 // Set number of players
 const numOfPlayers = 7
 
@@ -34,20 +35,30 @@ for (let i = 0; i < players.length; i++) {
   players[i].hand = playingCards.splice(0, 1)
 }
 
-// game
+// Discard pile
+let discardPile = []
+
+// GAME
 for (let i = 0; i < players.length; i++) {
-  // Deal card to player until stop value
-  dealCards(players[i], playingCards)
+  reshuffle(playingCards, discardPile) // shuffle deck if empty with discardpile
+
+  dealCards(players[i], playingCards) // Deal card to player until stop value
   // Print if winner, game is over
   if (players[i].value === 21 || (players[i].hand.length === 5 && players[i].value < 21)) {
     console.log(`Player : ${players[i].hand.join(' ')} (${players[i].value})`)
     console.log('Dealer : -')
     console.log('Player wins!')
+    discardPile = discardPile.concat(players[i].hand)
+  } else if (players[i].value > 21) {
+    console.log(`Player : ${players[i].hand.join(' ')} (${players[i].value})`)
+    console.log('Dealer : -')
+    console.log('Dealer wins!')
+    discardPile = discardPile.concat(players[i].hand)
   } else {
-  // Dealers turn
+    // Dealers turn
     dealerCards(dealer, playingCards)
     // print result
-    console.log(`Player : ${players[i].hand.join(' ')} (${players[i].value})`)
+    console.log(`Player : ${players[i].hand.join(' ')}(${players[i].value})`)
     console.log(`Dealer : ${dealer.hand.join(' ')} (${dealer.value})`)
     if (dealer.value === 21 || (dealer.hand.length === 5 && dealer.value < 21)) {
       console.log('Dealer wins!')
@@ -56,8 +67,34 @@ for (let i = 0; i < players.length; i++) {
     } else {
       console.log('Player wins!')
     }
+    discardPile = discardPile.concat(dealer.hand, players[i].hand)
   }
 }
+
+console.log(playingCards.join(', '), '\n')
+console.log(playingCards.length)
+console.log(discardPile.join(', '), '\n')
+console.log(discardPile.length)
+
+/*discardPile = discardPile.concat(dealer.hand, players[i].hand)
+ /* for (let i = 0; i < dealer.hand.length; i++) {
+    discardPile.push(dealer.hand[i])
+  }
+  for (let i = 0; i < players[i].hand.length; i++) {
+    discardPile.push(players[i].hand[i])
+  } */
+/*console.log(playingCards.join(', '), '\n')
+console.log(discardPile.join(', '), '\n')
+console.log(dealer.hand)
+console.log(playingCards.length)
+console.log(discardPile.length)
+playingCards = playingCards.concat(discardPile)
+discardPile = []
+console.log(playingCards.join(', '), '\n')
+console.log(discardPile.join(', '), '\n')
+/* playingCards.push(discardPile)
+Deck.shuffle(playingCards)
+console.log(playingCards) */
 
 /*
 try {

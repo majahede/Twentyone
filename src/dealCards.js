@@ -4,7 +4,7 @@ export function dealCards (player, deck) {
     player.hand.push(deck[0])
     deck.shift()
     player.value = player.hand.reduce((value, playingCard) => value + playingCard, 0)
-    if (player.value === 21 || player.value > player.stopValue()) {
+    if (player.value === 21 || player.value >= player.stopValue()) {
       break
     }
   }
