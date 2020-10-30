@@ -8,11 +8,11 @@
  */
 
 import { Deck } from './Deck.js'
-import { Player } from './player.js'
 import { createPlayer } from './createPlayer.js'
 import { dealCards } from './dealCards.js'
 import { Dealer } from './dealer.js'
 import { dealerCards } from './dealerCards.js'
+
 
 // Create a deck of 52 playing cards
 let playingCards = Deck.create()
@@ -26,6 +26,10 @@ let discardPile = []
 // Creates a new array of a number of players
 const players = createPlayer(process.argv[2])
 
+// error if invalid amount of players
+if ((process.argv[2] !== '50' && process.argv[2] !== '20' && process.argv[2] > 7) || process.argv[2] < 1) {
+  throw new TypeError('The passed argument is not a valid amount of players.')
+}
 // Create new dealer and set stop value
 const dealer = new Dealer(15)
 
@@ -65,6 +69,10 @@ for (let i = 0; i < players.length; i++) {
   }
 }
 
+/* if (playingCards.length === 0) {
+  throw new Error('Deck is empty.')
+}
+*/
 /*
 try {
   // Create 52 playing cards and...
