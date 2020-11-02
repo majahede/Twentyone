@@ -8,7 +8,7 @@
  */
 
 import { Deck } from './Deck.js'
-import { createPlayer } from './createPlayer.js'
+import { createPlayers } from './createPlayer.js'
 import { Dealer } from './dealer.js'
 import { dealCards } from './dealCards.js'
 import { InvalidPlayerNumberError } from './invalidPlayerNumberError.js'
@@ -25,18 +25,9 @@ try {
   let discardPile = []
 
   // Creates a new array of a number of players.
-  const players = createPlayer(process.argv[2])
+  const players = createPlayers(process.argv[2])
 
-  // check if valid number of players.
-  if ((process.argv[2] !== '50' && process.argv[2] !== '20' && process.argv[2] > 7) || process.argv[2] < 1) {
-    throw new InvalidPlayerNumberError('The passed argument is not a valid number of players.')
-  }
-
-  if (process.argv.length > 3) {
-    throw new InvalidPlayerNumberError('The passed argument is not a valid number of players.')
-  }
-
-  // Create new dealer and set stop value.
+  // Create new dealer
   const dealer = new Dealer(15)
 
   // Deal first card to all players.
@@ -46,26 +37,27 @@ try {
 
   // GAME
   for (let i = 0; i < players.length; i++) {
-    dealCards(players[i], 4, playingCards, discardPile) // Deal card to player until their stop value.
+    const player = players[i]
+    dealCards(player, 4, playingCards, discardPile) // Deal card to player until their stop value.
     // If player wins or loses right away
-    if (players[i].value === 21 || (players[i].hand.length === 5 && players[i].value < 21)) {
-      console.log(`Player #${players[i].number}: ${players[i].hand.join(' ')} (${players[i].value}) \nDealer   : - \nPlayer wins! \n`)
-      discardPile = discardPile.concat(players[i].hand)
-    } else if (players[i].value > 21) {
-      console.log(`Player #${players[i].number}: ${players[i].hand.join(' ')} (${players[i].value}) \nDealer   : - \nDealer wins! \n`)
-      discardPile = discardPile.concat(players[i].hand)
+    if (player.value === 21 || (player.hand.length === 5 && player.value < 21)) {
+      console.log(`Player #${players.number}: ${player.hand.join(' ')} (${player.value}) \nDealer   : - \nPlayer wins! \n`)
+      discardPile = discardPile.concat(player.hand)
+    } else if (player.value > 21) {
+      console.log(`Player #${player.number}: ${player.hand.join(' ')} (${player.value}) \nDealer   : - \nDealer wins! \n`)
+      discardPile = discardPile.concat(player.hand)
     } else {
       // Dealers turn
       dealer.hand = []
       dealCards(dealer, 5, playingCards, discardPile)
       // print result
-      console.log(`Player #${players[i].number}: ${players[i].hand.join(' ')} (${players[i].value}) \nDealer   : ${dealer.hand.join(' ')} (${dealer.value})`)
-      if (dealer.value === 21 || (dealer.hand.length === 5 && dealer.value < 21) || (dealer.value < 21 && dealer.value >= players[i].value)) {
+      console.log(`Player #${player.number}: ${player.hand.join(' ')} (${player.value}) \nDealer   : ${dealer.hand.join(' ')} (${dealer.value})`)
+      if (dealer.value === 21 || (dealer.hand.length === 5 && dealer.value < 21) || (dealer.value < 21 && dealer.value >= player.value)) {
         console.log('Dealer wins! \n')
       } else {
         console.log('Player wins! \n')
       }
-      discardPile = discardPile.concat(dealer.hand, players[i].hand)
+      discardPile = discardPile.concat(dealer.hand, player.hand)
     }
   }
 } catch (err) {
