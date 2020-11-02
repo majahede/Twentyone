@@ -6,6 +6,6 @@ export function reshuffle (deck, discardPile) {
       deck.push(discardPile[i])
     }
     Deck.shuffle(deck)
-    //discardPile.length = 0
+    discardPile.length = 0
   }
 }

@@ -2,9 +2,10 @@
 export class Player {
   constructor (number) {
     this.number = number
+    this.stopValue()
   }
 
   stopValue () {
-    return Math.floor(Math.random() * (18 - 9 + 1) + 9)
+    this.stopValue = Math.floor(Math.random() * (18 - 9 + 1) + 9)
   }
 }
