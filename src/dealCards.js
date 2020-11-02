@@ -12,7 +12,7 @@ export function dealCards (player, numOfCards, deck, discardPile) {
     deck.shift()
     player.value = player.hand.reduce((value, playingCard) => value + playingCard, 0)
     valueOfAce(player)
-    if (player.value === 21 || player.value >= player.stopValue) {
+    if (player.value === 21 || player.value >= player.maxValue) {
       break
     }
   }

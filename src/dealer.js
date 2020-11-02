@@ -1,5 +1,16 @@
 export class Dealer {
-  constructor (stopValue) {
-    this.stopValue = stopValue
+  constructor (maxValue) {
+    this.maxValue = maxValue
+  }
+
+  get maxValue () {
+    return this._maxValue
+  }
+
+  set maxValue (value) {
+    if (!Number.isInteger(value) || value > 21) {
+      throw new Error('Invalid max value')
+    }
+    this._maxValue = value
   }
 }

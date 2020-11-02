@@ -27,8 +27,12 @@ try {
   // Creates a new array of a number of players.
   const players = createPlayer(process.argv[2])
 
-  // Throw error if invalid number of players.
+  // check if valid number of players.
   if ((process.argv[2] !== '50' && process.argv[2] !== '20' && process.argv[2] > 7) || process.argv[2] < 1) {
+    throw new InvalidPlayerNumberError('The passed argument is not a valid number of players.')
+  }
+
+  if (process.argv.length > 3) {
     throw new InvalidPlayerNumberError('The passed argument is not a valid number of players.')
   }
 
