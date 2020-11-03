@@ -13,6 +13,8 @@ import { Dealer } from './dealer.js'
 import { dealCards } from './dealCards.js'
 import { InvalidPlayerNumberError } from './invalidPlayerNumberError.js'
 import { EmptyDeckError } from './emptyDeckError.js'
+import { printPlayerResult } from './printPlayerResult.js'
+import { printResult } from './printResult.js'
 
 try {
   // Create a deck of 52 playing cards.
@@ -35,29 +37,22 @@ try {
     players[i].hand = playingCards.splice(0, 1)
   }
 
-  // GAME
+  // Game
   for (let i = 0; i < players.length; i++) {
     const player = players[i]
-    dealCards(player, 4, playingCards, discardPile) // Deal card to player until their stop value.
-    // If player wins or loses right away
+    dealCards(player, 4, playingCards, discardPile)
+
     if (player.value === 21 || (player.hand.length === 5 && player.value < 21)) {
-      console.log(`Player #${players.number}: ${player.hand.join(' ')} (${player.value}) \nDealer   : - \nPlayer wins! \n`)
+      printPlayerResult(player, 'Player')
       discardPile = discardPile.concat(player.hand)
     } else if (player.value > 21) {
-      console.log(`Player #${player.number}: ${player.hand.join(' ')} (${player.value}) \nDealer   : - \nDealer wins! \n`)
+      printPlayerResult(player, 'Dealer')
       discardPile = discardPile.concat(player.hand)
     } else {
-      // Dealers turn
-      dealer.hand = []
       dealCards(dealer, 5, playingCards, discardPile)
-      // print result
-      console.log(`Player #${player.number}: ${player.hand.join(' ')} (${player.value}) \nDealer   : ${dealer.hand.join(' ')} (${dealer.value})`)
-      if (dealer.value === 21 || (dealer.hand.length === 5 && dealer.value < 21) || (dealer.value < 21 && dealer.value >= player.value)) {
-        console.log('Dealer wins! \n')
-      } else {
-        console.log('Player wins! \n')
-      }
+      printResult(dealer, player)
       discardPile = discardPile.concat(dealer.hand, player.hand)
+      dealer.hand = []
     }
   }
 } catch (err) {

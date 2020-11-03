@@ -14,7 +14,7 @@ export function createPlayers (number = 3) {
   }
 
   if (process.argv.length > 3) {
-    throw new InvalidPlayerNumberError('The passed argument is not a valid number of players.')
+    throw new InvalidPlayerNumberError('Too many arguments were passed.')
   }
 
   const players = []

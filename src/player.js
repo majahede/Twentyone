@@ -15,6 +15,9 @@ export class Player {
     this.maxValue()
   }
 
+  /**
+   * Sets a random number as the maximum value for the players hand.
+   */
   maxValue () {
     this.maxValue = Math.floor(Math.random() * (18 - 9 + 1) + 9)
   }

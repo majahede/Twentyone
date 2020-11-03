@@ -1,5 +1,5 @@
 /**
- * Decides if ace should counts as 1 or 14.
+ * Decides if ace has the value of 1 or 14.
  *
  * @param {object} player - The current player or dealer.
  */
