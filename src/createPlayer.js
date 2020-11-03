@@ -1,5 +1,6 @@
 import { Player } from './player.js'
 import { InvalidPlayerNumberError } from './invalidPlayerNumberError.js'
+import { InvalidNumberOfArgumentsError } from './invalidNumberOfArgumentsError.js'
 
 /**
  * Creates an array of players.
@@ -14,7 +15,7 @@ export function createPlayers (number = 3) {
   }
 
   if (process.argv.length > 3) {
-    throw new InvalidPlayerNumberError('Too many arguments were passed.')
+    throw new InvalidNumberOfArgumentsError('Too many arguments were passed.')
   }
 
   const players = []

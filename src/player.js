@@ -6,7 +6,7 @@
  */
 export class Player {
   /**
-   * Creates a playerrs.
+   * Creates a player.
    *
    * @param {number} number - The player number.
    */
@@ -16,7 +16,7 @@ export class Player {
   }
 
   /**
-   * Sets a random number as the maximum value for the players hand.
+   * Sets a random number as the value where the player stop drawing cards.
    */
   maxValue () {
     this.maxValue = Math.floor(Math.random() * (18 - 9 + 1) + 9)

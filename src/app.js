@@ -17,38 +17,33 @@ import { printPlayerResult } from './printPlayerResult.js'
 import { printResult } from './printResult.js'
 
 try {
-  // Create a deck of 52 playing cards.
+  // Create a deck of 52 playing cards and shuffle.
   const playingCards = Deck.create()
-
-  // shuffle the deck.
   Deck.shuffle(playingCards)
 
-  // Create discard pile.
-  let discardPile = []
+  let discardPile = [] // Create discard pile.
 
-  // Creates a new array of a number of players.
-  const players = createPlayers(process.argv[2])
+  const players = createPlayers(process.argv[2]) // Create a new array of players.
 
-  // Create new dealer
-  const dealer = new Dealer(15)
+  const dealer = new Dealer(15) // Create new dealer.
 
   // Deal first card to all players.
   for (let i = 0; i < players.length; i++) {
     players[i].hand = playingCards.splice(0, 1)
   }
 
-  // Game
   for (let i = 0; i < players.length; i++) {
     const player = players[i]
-    dealCards(player, 4, playingCards, discardPile)
+    dealCards(player, 4, playingCards, discardPile) // Deal cards to current player.
 
     if (player.value === 21 || (player.hand.length === 5 && player.value < 21)) {
       printPlayerResult(player, 'Player')
-      discardPile = discardPile.concat(player.hand)
+      discardPile = discardPile.concat(player.hand) // Discard cards.
     } else if (player.value > 21) {
       printPlayerResult(player, 'Dealer')
       discardPile = discardPile.concat(player.hand)
     } else {
+      // Dealers turn.
       dealCards(dealer, 5, playingCards, discardPile)
       printResult(dealer, player)
       discardPile = discardPile.concat(dealer.hand, player.hand)

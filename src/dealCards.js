@@ -3,7 +3,7 @@ import { valueOfAce } from './valueOfAce.js'
 import { EmptyDeckError } from './emptyDeckError.js'
 
 /**
- * Deals card to player or dealer until they reaches their max value.
+ * Deals card to player or dealer until they reach their max value.
  *
  * @param {object} player - The current player.
  * @param {number} numOfCards -  The maximum number of cards to deal.
@@ -13,7 +13,7 @@ import { EmptyDeckError } from './emptyDeckError.js'
  */
 export function dealCards (player, numOfCards, deck, discardPile) {
   for (let i = 0; i < numOfCards; i++) {
-    reshuffle(deck, discardPile) // shuffle deck if empty with discardpile
+    reshuffle(deck, discardPile) // shuffle deck if empty with discard pile.
     if (deck.length === 0) {
       throw new EmptyDeckError('Deck is empty.')
     }

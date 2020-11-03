@@ -8,7 +8,7 @@ export class Dealer {
   /**
    * Creates a dealer.
    *
-   * @param {number} maxValue - The maximum value for the dealers hand.
+   * @param {number} maxValue - The value where the dealer stop drawing cards.
    */
   constructor (maxValue) {
     this.maxValue = maxValue
